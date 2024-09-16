@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://bgmx0hsj0os3f"]
+
+[ext_resource type="Script" path="res://world.gd" id="1_e6u57"]
+[ext_resource type="PackedScene" uid="uid://0hh28rnwksic" path="res://node_3d.tscn" id="1_lnrgb"]
+[ext_resource type="PackedScene" uid="uid://6ieogw0nd2f2" path="res://coin.tscn" id="2_684aa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nl2db"]
+size = Vector3(100, 5, 150)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ipqp8"]
+size = Vector3(100, 20, 110)
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_e6u57")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.00174539, -0.507537, 0.861628, 0, 0.861629, 0.507538, -0.999998, 0.00088585, -0.00150388, 104.485, 90.952, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.055973, -0.508846, 0.859036, -0.0330852, 0.860857, 0.507769, -0.997884, 0, -0.06502, 170.414, 111.369, 0)
+light_energy = 6.462
+light_indirect_energy = 2.375
+light_angular_distance = 31.6
+
+[node name="coin" parent="." instance=ExtResource("2_684aa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.4943, 121.179, -33.3021)
+
+[node name="coin2" parent="." instance=ExtResource("2_684aa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.4826, 121.291, -11.9615)
+
+[node name="coin8" parent="." instance=ExtResource("2_684aa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.4826, 121.291, -22.6649)
+
+[node name="coin3" parent="." instance=ExtResource("2_684aa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.4428, 121.256, -1.00508)
+
+[node name="coin4" parent="." instance=ExtResource("2_684aa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.4547, 122.34, 31.3596)
+
+[node name="coin6" parent="." instance=ExtResource("2_684aa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.4547, 122.34, -43.987)
+
+[node name="coin5" parent="." instance=ExtResource("2_684aa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.3747, 121.455, 20.5865)
+
+[node name="coin7" parent="." instance=ExtResource("2_684aa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.3747, 121.455, 9.78354)
+
+[node name="walls" parent="." instance=ExtResource("1_lnrgb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.47797, 31.0585, -4.0994)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -38.7341, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 101.465, 30.7809, 0)
+shape = SubResource("BoxShape3D_nl2db")
+
+[node name="Area3D2" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+transform = Transform3D(0.953387, 0, 0, 0, 1, 0, 0, 0, 1, -49.9836, 12.7352, 0)
+shape = SubResource("BoxShape3D_ipqp8")
+
+[node name="Area3D3" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.1246, -3.0078, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D3"]
+transform = Transform3D(0.953387, 0, 0, 0, 1, 0, 0, 0, 1, -49.9836, 12.7352, 0)
+shape = SubResource("BoxShape3D_ipqp8")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="Area3D2" to="." method="_coin_out_of_bounds"]
+[connection signal="body_entered" from="Area3D3" to="." method="_coin_out_of_bounds"]
